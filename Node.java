@@ -1,6 +1,6 @@
 public class Node {
-	private Integer key;
-	private Integer balancingFactor;
+	private final Integer key;
+	private Integer height = 0;
 	private Node left;
 	private Node right;
 
@@ -16,8 +16,24 @@ public class Node {
 		return left;
 	}
 
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
 	public Node getRight() {
 		return right;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Integer getHeight() {
+		return this.height;
 	}
 
 }

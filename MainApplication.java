@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class MainApplication {
@@ -29,17 +30,28 @@ public class MainApplication {
 							"(" + OPERATION_EXIT + ") Sair");
 			operation = in.nextInt();
 
+			if (!List.of(OPERATION_INSERT, OPERATION_DELETE, OPERATION_SEARCH, OPERATION_EXIT).contains(operation)) {
+				System.out.println("O valor digitado é inválido, informe uma das opções!");
+				continue;
+			}
+
+			if (operation == OPERATION_EXIT) {
+				System.out.println("Saindo...");
+				continue;
+			}
+
+			System.out.println("Qual valor deseja?");
+			var value = in.nextInt();
+
 			switch (operation) {
 				case OPERATION_INSERT -> {
+					avlTree.insert(value);
+					System.out.println(avlTree);
 				}
 				case OPERATION_DELETE -> {
 				}
 				case OPERATION_SEARCH -> {
 				}
-				case OPERATION_EXIT -> {
-					System.out.println("Saindo");
-				}
-				default -> System.out.println("O valor digitado é inválido, informe uma das opções!");
 			}
 
 		} while (operation != 4);
