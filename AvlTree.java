@@ -1,53 +1,75 @@
 public class AvlTree {
-	private final Node root;
+	private Node root;
 
 	public AvlTree(Node root) {
 		this.root = root;
 	}
 
 	public void insert(Integer key) {
-		insertNode(root, key, 0);
+		this.root = insertNode(root, key);
 	}
 
-	private Integer insertNode(Node node, Integer key, Integer branchHeight) {
+	private Node insertNode(Node node, Integer key) {
 		var nodeKey = node.getKey();
-		var totalHeight = branchHeight;
 
 		if (key >= nodeKey) {
-			var right = node.getRight();
-
-			if (right == null) {
-				var child = new Node(key);
-				node.setRight(child);
-				totalHeight += 1;
-			} else {
-				totalHeight += insertNode(right, key, totalHeight);
-			}
+			var child = createNode(key, node.getRight());
+			node.setRight(child);
 		}
 
 		if (key < nodeKey) {
-			var left = node.getLeft();
-
-			if (left == null) {
-				var child = new Node(key);
-				node.setLeft(child);
-				totalHeight += 1;
-			} else {
-				totalHeight += insertNode(left, key, totalHeight);
-			}
+			var child = createNode(key, node.getLeft());
+			node.setLeft(child);
 		}
 
-		if (totalHeight > node.getHeight()) {
-			node.setHeight(totalHeight);
+		node.updateHeight();
+
+		return balanceNode(node);
+	}
+
+	private Node createNode(Integer key, Node parent) {
+		if (parent == null) {
+			return new Node(key);
 		}
+
+		return insertNode(parent, key);
+	}
+
+	private Node balanceNode(Node node) {
+		int balanceFactor = node.getBalanceFactor();
 
 		// Rotação para direita:
-		// left.getHeight() - right.getHeight() > 1
+		if(balanceFactor > 1) {
+			return rotateRight(node);
+		}
 
 		// Rotação para esquerda
-		// left.getHeight() - right.getHeight() < -1
+		if(balanceFactor < -1) {
+			return rotateLeft(node);
+		}
 
-		return totalHeight + 1;
+		// TODO: Rotação dupla para direita
+		// TODO: Rotação dupla para esquerda
+
+		return node;
+	}
+
+	private Node rotateRight(Node node) {
+		var left = node.getLeft();
+
+		left.setRight(node);
+		node.setLeft(null);
+
+		return left;
+	}
+
+	private Node rotateLeft(Node node) {
+		var right = node.getRight();
+
+		right.setLeft(node);
+		node.setRight(null);
+
+		return right;
 	}
 
 	public String toString() {

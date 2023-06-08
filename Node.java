@@ -36,4 +36,15 @@ public class Node {
 		return this.height;
 	}
 
+	public void updateHeight(){
+		setHeight(Math.max(getHeightNode(left), getHeightNode(right)));
+	}
+
+	public Integer getBalanceFactor() {
+		return getHeightNode(left) - getHeightNode(right);
+	}
+
+	private Integer getHeightNode(Node node) {
+		return node != null ? node.getHeight() + 1 : 0;
+	}
 }
