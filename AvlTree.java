@@ -38,7 +38,7 @@ public class AvlTree {
 	private Node balanceNode(Node node) {
 		int balanceFactor = node.getBalanceFactor();
 
-		// Rotação para direita:
+		// Rotação para direita
 		if(balanceFactor > 1) {
 			return rotateRight(node);
 		}
@@ -48,13 +48,16 @@ public class AvlTree {
 			return rotateLeft(node);
 		}
 
-		// TODO: Rotação dupla para direita
-		// TODO: Rotação dupla para esquerda
-
 		return node;
 	}
 
 	private Node rotateRight(Node node) {
+		// Verifica se deve ser rotação dupla para direita
+		var leftBalanceFactor = node.getLeft().getBalanceFactor();
+		if (leftBalanceFactor <= -1) {
+			node.setLeft(rotateLeft(node.getLeft()));
+		}
+
 		var left = node.getLeft();
 
 		left.setRight(node);
@@ -64,6 +67,12 @@ public class AvlTree {
 	}
 
 	private Node rotateLeft(Node node) {
+		// Verifica se deve ser rotação dupla para esquerda
+		var rightBalanceFactor = node.getRight().getBalanceFactor();
+		if (rightBalanceFactor >= 1) {
+			node.setRight(rotateRight(node.getRight()));
+		}
+
 		var right = node.getRight();
 
 		right.setLeft(node);
