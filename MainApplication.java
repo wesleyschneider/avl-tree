@@ -8,7 +8,7 @@ public class MainApplication {
 	static final int OPERATION_EXIT = 4;
 
 	public static void main(String[] args) {
-		System.out.println("\n\n------ AVL Tree - Estruturas Avançadas de Dados (Unisinos) ------\n\n");
+		System.out.println("\n\n------ AVL Tree - Estruturas Avancadas de Dados (Unisinos) ------\n\n");
 
 		Scanner in = new Scanner(System.in);
 
@@ -23,7 +23,7 @@ public class MainApplication {
 
 		do {
 			System.out.println(
-					"\nQual operação deseja realizar:\n" +
+					"\nQual operacao deseja realizar:\n" +
 							"(" + OPERATION_INSERT + ") Inserir\n" +
 							"(" + OPERATION_DELETE + ") Deletar\n" +
 							"(" + OPERATION_SEARCH + ") Buscar\n" +
@@ -31,7 +31,7 @@ public class MainApplication {
 			operation = in.nextInt();
 
 			if (!List.of(OPERATION_INSERT, OPERATION_DELETE, OPERATION_SEARCH, OPERATION_EXIT).contains(operation)) {
-				System.out.println("O valor digitado é inválido, informe uma das opções!");
+				System.out.println("O valor digitado e invalido, informe uma das opcoes!");
 				continue;
 			}
 
@@ -54,8 +54,8 @@ public class MainApplication {
 				}
 				case OPERATION_SEARCH -> {
 					var result = avlTree.search(value);
-					var message = result == null ? "Não encontrou" : result.getKey();
-					System.out.println("Nó: " + message);
+					var message = result == null ? "Nao encontrou" : result.getKey();
+					System.out.println("No: " + message);
 				}
 			}
 
