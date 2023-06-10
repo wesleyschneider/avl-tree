@@ -53,6 +53,9 @@ public class MainApplication {
 					System.out.println("AVL Tree: " + avlTree);
 				}
 				case OPERATION_SEARCH -> {
+					var result = avlTree.search(value);
+					var message = result == null ? "Não encontrou" : result.getKey();
+					System.out.println("Nó: " + message);
 				}
 			}
 

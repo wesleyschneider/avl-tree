@@ -54,37 +54,37 @@ public class AvlTree {
 
 		if (key.equals(nodeKey)) {
 			if (left != null) {
-				if (left.getRight() != null) {
-					var newNode = getMaxRightChild(left.getRight());
-
-					left.setRight(left.getRight().getLeft());
-					newNode.setLeft(left);
-					newNode.setRight(right);
-
-					newNode.updateHeight();
-					left.updateHeight();
-
-					return newNode;
+				if (left.getRight() == null) {
+					return left;
 				}
 
-				return left;
+				var newNode = getMaxRightChild(left.getRight());
+
+				left.setRight(left.getRight().getLeft());
+				newNode.setLeft(left);
+				newNode.setRight(right);
+
+				newNode.updateHeight();
+				left.updateHeight();
+
+				return newNode;
 			}
 
 			if (right != null) {
-				if (right.getLeft() != null) {
-					var newNode = getMaxLeftChild(right.getLeft());
-
-					right.setLeft(right.getLeft().getRight());
-					newNode.setRight(right);
-					newNode.setLeft(null);
-
-					newNode.updateHeight();
-					right.updateHeight();
-
-					return newNode;
+				if (right.getLeft() == null) {
+					return right;
 				}
 
-				return right;
+				var newNode = getMaxLeftChild(right.getLeft());
+
+				right.setLeft(right.getLeft().getRight());
+				newNode.setRight(right);
+				newNode.setLeft(null);
+
+				newNode.updateHeight();
+				right.updateHeight();
+
+				return newNode;
 			}
 
 			return null;
@@ -93,6 +93,7 @@ public class AvlTree {
 		node.updateHeight();
 
 		return balanceNode(node);
+
 	}
 
 	private Node getMaxRightChild(Node node) {
@@ -167,6 +168,20 @@ public class AvlTree {
 		node.setRight(null);
 
 		return right;
+	}
+
+	public Node search(Integer key) {
+		Node node = root;
+
+		while(node != null) {
+			if(key.equals(node.getKey())){
+				break;
+			}
+
+			node = key >= node.getKey() ? node.getRight() : node.getLeft();
+		}
+
+		return node;
 	}
 
 	public String toString() {
