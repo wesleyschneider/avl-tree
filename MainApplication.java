@@ -17,7 +17,7 @@ public class MainApplication {
 
 		var avlTree = new AvlTree(new Node(firstNodeKey));
 
-		System.out.println("\nAVL Tree: " + avlTree);
+		System.out.println("AVL Tree: " + avlTree);
 
 		int operation;
 
@@ -46,9 +46,11 @@ public class MainApplication {
 			switch (operation) {
 				case OPERATION_INSERT -> {
 					avlTree.insert(value);
-					System.out.println(avlTree);
+					System.out.println("AVL Tree: " + avlTree);
 				}
 				case OPERATION_DELETE -> {
+					avlTree.delete(value);
+					System.out.println("AVL Tree: " + avlTree);
 				}
 				case OPERATION_SEARCH -> {
 				}

@@ -35,11 +35,99 @@ public class AvlTree {
 		return insertNode(parent, key);
 	}
 
+	public void delete(Integer key) {
+		this.root = deleteNode(root, key);
+	}
+
+	private Node deleteNode(Node node, Integer key) {
+		var nodeKey = node.getKey();
+		var right = node.getRight();
+		var left = node.getLeft();
+
+		if (key > nodeKey) {
+			node.setRight(deleteNode(right, key));
+		}
+
+		if (key < nodeKey) {
+			node.setLeft(deleteNode(left, key));
+		}
+
+		if (key.equals(nodeKey)) {
+			if (left != null) {
+				if (left.getRight() != null) {
+					var newNode = getMaxRightChild(left.getRight());
+
+					left.setRight(left.getRight().getLeft());
+					newNode.setLeft(left);
+					newNode.setRight(right);
+
+					newNode.updateHeight();
+					left.updateHeight();
+
+					return newNode;
+				}
+
+				return left;
+			}
+
+			if (right != null) {
+				if (right.getLeft() != null) {
+					var newNode = getMaxLeftChild(right.getLeft());
+
+					right.setLeft(right.getLeft().getRight());
+					newNode.setRight(right);
+					newNode.setLeft(null);
+
+					newNode.updateHeight();
+					right.updateHeight();
+
+					return newNode;
+				}
+
+				return right;
+			}
+
+			return null;
+		}
+
+		node.updateHeight();
+
+		return balanceNode(node);
+	}
+
+	private Node getMaxRightChild(Node node) {
+		var right = node.getRight();
+
+		if (right == null) return node;
+
+		var value = getMaxRightChild(right);
+
+		if (value.getKey().equals(right.getKey())) {
+			node.setRight(null);
+		}
+
+		return value;
+	}
+
+	private Node getMaxLeftChild(Node node) {
+		var left = node.getLeft();
+
+		if (left == null) return node;
+
+		var value = getMaxLeftChild(left);
+
+		if (value.getKey().equals(left.getKey())) {
+			node.setLeft(null);
+		}
+
+		return value;
+	}
+
 	private Node balanceNode(Node node) {
 		int balanceFactor = node.getBalanceFactor();
 
 		// Rotação para direita
-		if(balanceFactor > 1) {
+		if (balanceFactor > 1) {
 			return rotateRight(node);
 		}
 
@@ -86,6 +174,8 @@ public class AvlTree {
 	}
 
 	private String nodeToString(Node root, Boolean isStarting) {
+		if (root == null) return "( )";
+
 		var result = root.getKey().toString();
 
 		if (isStarting) {
