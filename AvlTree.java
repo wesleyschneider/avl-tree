@@ -149,8 +149,8 @@ public class AvlTree {
 
 		var left = node.getLeft();
 
+		node.setLeft(left.getRight());
 		left.setRight(node);
-		node.setLeft(null);
 
 		return left;
 	}
@@ -164,8 +164,8 @@ public class AvlTree {
 
 		var right = node.getRight();
 
+		node.setRight(right.getLeft());
 		right.setLeft(node);
-		node.setRight(null);
 
 		return right;
 	}
